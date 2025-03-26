@@ -69,6 +69,7 @@ This project implements a RESTful API to calculate customer rewards based on tra
 
 * `GET /rewards/v1/{customerId}?months={months}`: Calculates rewards for a given customer within a specified time frame.
 * `POST /rewards/v1/{customerId}/transactions`: adds a transaction for a given customer.
+*  Swgger #http://localhost:8080/swagger-ui/index.html#/reward-controller/addTransaction
 
 ## Running the Application
 
@@ -100,7 +101,7 @@ INSERT INTO transaction (amount, date, customer_id) VALUES (90, '2024-12-25', 2)
 * Slf4j
 * Jackson
 
-  #http://localhost:8080/swagger-ui/index.html#/reward-controller/addTransaction
+
 
 ## Contributing
 
