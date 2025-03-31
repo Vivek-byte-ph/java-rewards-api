@@ -6,7 +6,9 @@ import com.org.Rewards.entity.Transaction;
 import com.org.Rewards.repositories.CustomerRepository;
 import com.org.Rewards.repositories.TransactionRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
+import org.mockito.InjectMocks;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -16,6 +18,8 @@ import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.test.web.servlet.result.MockMvcResultMatchers;
 
 import java.time.LocalDate;
+
+import static org.mockito.Mockito.when;
 
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -34,6 +38,7 @@ class RewardsApplicationTests {
 	private ObjectMapper objectMapper;
 
 	private Customer testCustomer;
+
 
 	@BeforeEach
 	public void setup() {
@@ -127,4 +132,5 @@ class RewardsApplicationTests {
 				.andExpect(MockMvcResultMatchers.jsonPath("$.transactions").isArray())
 				.andExpect(MockMvcResultMatchers.jsonPath("$.transactions.length()").value(3));
 	}
+
 }

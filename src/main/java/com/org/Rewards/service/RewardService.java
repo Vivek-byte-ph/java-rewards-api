@@ -12,10 +12,23 @@ import java.util.List;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * This service class calculates rewards points for customer transactions.
+ */
 @Service
 public class RewardService {
     @Autowired
     private CustomerRepository customerRepository;
+
+    /**
+     * Calculates rewards for a customer based on their transactions.
+     *
+     * @param customerId The ID of the customer.
+     * @param months     The number of months to consider for rewards calculation.
+     * @return A map containing the total rewards and monthly rewards breakdown.
+     * @throws RuntimeException if the customer is not found.
+     */
+
     public Map<String, Object> calculateRewards(Long customerId, int months) {
         Optional<Customer> customerOptional = customerRepository.findById(customerId);
         if (customerOptional.isPresent()) {
@@ -28,6 +41,13 @@ public class RewardService {
             throw new RuntimeException("Customer not found with id: " + customerId);
         }
     }
+
+    /**
+     * Calculates the monthly rewards for a list of transactions.
+     *
+     * @param transactions The list of transactions.
+     * @return A map containing the monthly rewards breakdown.
+     */
     public Map<YearMonth, Integer> calculateMonthlyRewards(List<Transaction> transactions) {
         Map<YearMonth, Integer> monthlyRewards = new HashMap<>();
         for (Transaction transaction : transactions) {
@@ -37,10 +57,24 @@ public class RewardService {
         }
         return monthlyRewards;
     }
+
+    /**
+     * Calculates the total rewards for a list of transactions.
+     *
+     * @param transactions The list of transactions.
+     * @return The total rewards points.
+     */
     public int calculateTotalRewards(List<Transaction> transactions) {
         return transactions.stream().mapToInt(transaction -> calculatePoints(transaction.getAmount())).sum();
     }
-    private int calculatePoints(double amount) {
+
+    /**
+     * Calculates the rewards points for a single transaction amount.
+     *
+     * @param amount The transaction amount.
+     * @return The calculated rewards points.
+     */
+    public int calculatePoints(double amount) {
         int points = 0;
         if (amount > 100) {
             points += (amount - 100) * 2;
@@ -51,4 +85,6 @@ public class RewardService {
         }
         return points;
     }
+
+
 }
